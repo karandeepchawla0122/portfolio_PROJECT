@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Portfolio Analyzer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #1f4037, #99f2c8);
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 420px;
+            margin: 60px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #1f4037;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #145a4e;
+        }
+
+        .result {
+            margin-top: 25px;
+            padding: 15px;
+            background: #f4f4f4;
+            border-radius: 8px;
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: #1f4037;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <h2>Portfolio Analyzer</h2>
+
+    <form action="/result" method="POST">
+        <label>Metals</label>
+        <input type="number" name="metals" step="any" required>
+
+        <label>Fixed Deposit (FD)</label>
+        <input type="number" name="fd" step="any" required>
+
+        <label>Stocks</label>
+        <input type="number" name="stocks" step="any" required>
+
+        <label>Mutual Funds</label>
+        <input type="number" name="mf" step="any" required>
+
+        <button type="submit">Analyze Portfolio</button>
+    </form>
+
+    {% if total is defined %}
+    <div class="result">
+        <h3>Result</h3>
+        <p>Total Investment: <span class="highlight">₹ {{ total }}</span></p>
+        <p>Metals: {{ metals_pct }}%</p>
+        <p>FD: {{ fd_pct }}%</p>
+        <p>Stocks: {{ stocks_pct }}%</p>
+        <p>Mutual Funds: {{ mf_pct }}%</p>
+
+        <h3>Suggestions</h3>
+        {% if suggestions and suggestions|length > 0 %}
+            <ul>
+                {% for s in suggestions %}
+                    <li>{{ s }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No suggestions generated.</p>
+        {% endif %}
+    </div>
+    {% endif %}
+
+</div>
+
+</body>
+</html>
